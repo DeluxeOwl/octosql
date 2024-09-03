@@ -9,6 +9,7 @@ import (
 
 	"github.com/valyala/fastjson"
 
+	"github.com/cube2222/octosql/config"
 	"github.com/cube2222/octosql/execution"
 	"github.com/cube2222/octosql/execution/files"
 	"github.com/cube2222/octosql/octosql"
@@ -25,7 +26,7 @@ func Creator(ctx context.Context, name string, options map[string]string) (physi
 	fields := make(map[string]octosql.Type)
 
 	sc := bufio.NewScanner(f)
-	sc.Buffer(nil, 1024*1024)
+	sc.Buffer(nil, config.FromContext(ctx).Files.JSON.MaxLineSizeBytes)
 
 	var p fastjson.Parser
 	i := 0
